@@ -22,10 +22,10 @@ cat $samplelist | parallel -j 8 \
 
 wait
 
-cat $samplelist | parallel -j 48 bwa-mem2 mem -t 24 ./genomes/droso_human_concat_genome.fa \
+cat $samplelist | parallel -j 2 "bwa-mem2 mem -t 24 ./genomes/droso_human_concat_genome.fa \
 	./trim_galore/HCHTNCCX2_5_1_{}_150bp_271639.concat_chastity_passed_val_1.fastq.gz \
 	./trim_galore/HCHTNCCX2_5_2_{}_150bp_271639.concat_chastity_passed_val_2.fastq.gz | 
-	samtools sort -o mapped/{}_nov2020.bam
+	samtools sort -o mapped/{}_nov2020.bam"
 
 wait
 
