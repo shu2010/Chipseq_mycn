@@ -19,6 +19,7 @@
 # cd ..
 
 # mkdir -p mapped
+# mkdir -p markdup
 # mkdir -p flagstats
 
 # ls /projects/drc/mycn_chip_seq_2020/*.gz | sed 's/^.*5_1_\|^.*5_2_\|_150.*$//g' | sort -u > samplelist.txt
@@ -40,4 +41,4 @@ cat $samplelist | parallel -j 2 "bwa-mem2 mem -t 24 ./genomes/droso_human_concat
 wait
 
 cat $samplelist | parallel -j 8 samtools flagstat ./mapped/{}_nov2020.bam > ./flagstats/{}_nov2020.bam.flagstat
-cat $samplelist | parallel -j 8 samtools markdup ./mapped/{}_nov2020.bam ./mapped/{}_markdup_nov2020.bam 
+cat $samplelist | parallel -j 8 samtools markdup ./mapped/{}_nov2020.bam ./markdup/{}_markdup_nov2020.bam 
