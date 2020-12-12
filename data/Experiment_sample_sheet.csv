@@ -1,0 +1,5 @@
+SampleID,Tissue,Factor,Condition,Replicate,bamReads,ControlID,bamControl,Peaks,PeakCaller
+1a,CaOV3,MYCN,none,1,hg38_bam_path,Input,hg38_input_dna_path_to_control_bam,peakfiles_path,macs2
+1b,CaOV3,MYCN,none,1,hg38_bam_path,Input,hg38_input_dna_path_to_control_bam,peakfiles_path,macs2
+2a,CaOV3,MYCN,DOX,2,hg38_bam_path,Input,hg38_input_dna_path_to_control_bam,peakfiles_path,macs2
+2b,CaOV3,MYCN,DOX,2,hg38_bam_path,Input,hg38_input_dna_path_to_control_bam,peakfiles_path,macs2
