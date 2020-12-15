@@ -2,6 +2,9 @@
 
 # from Brundle workflow: tag and merge
 
+# gunzip all
+gunzip *.gz
+
 # genome
 sed "s/^>/>hs_/" hg38.fa > tmp
 sed "s/^>/>dm_/" dm6.fa > tmp2
