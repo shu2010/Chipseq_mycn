@@ -37,3 +37,15 @@ jg.controlCountsUntreated<-jg.getControlCounts(jg.controlPeakset,
 
 saveRDS(jg.controlCountsTreated, "control_counts_treated_object",compress = T) ##Please share
 saveRDS(jg.controlCountsUntreated, "contro_counts_untreated_object", compress = T) ##Please share
+
+##Calculation of correction factor
+#Get the sample names for replicates that represent the two conditions.
+jg.untreatedNames <- names(jg.controlCountsUntreated)
+jg.treatedNames   <- names(jg.controlCountsTreated)
+
+#Calculate correction factor for DiffBind
+jg.correctionFactor<-jg.getCorrectionFactor(jg.experimentSampleSheet,
+                                            jg.treatedNames,
+                                            jg.untreatedNames)
+
+saveRDS(jg.correctionFactor, "correctionFactor_object", compress = T) ##Please share
