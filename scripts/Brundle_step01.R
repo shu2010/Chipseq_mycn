@@ -8,10 +8,12 @@ jg.controlMinOverlap      <- 5
 jg.treatedCondition       =  "DOX"
 jg.untreatedCondition     =  "none"
 
+jg.experimentSampleSheet = "/projects/drc_scratch/chipseq_wf/Chipseq_mycn/data/Experiment_sample_sheet.csv"
+jg.controlSampleSheet    = "/projects/drc_scratch/chipseq_wf/Chipseq_mycn/data/Control_sample_sheet.csv"
 
 ##Create Diffbind object
-dbaExperiment <- jg.getDba("path/to/Experiment_sample_sheet.csv", bRemoveDuplicates=TRUE)
-dbaControl    <- jg.getDba("path/to/Control_sample_sheet.csv", bRemoveDuplicates=TRUE)
+dbaExperiment <- jg.getDba(jg.experimentSampleSheet, bRemoveDuplicates=TRUE)
+dbaControl    <- jg.getDba(jg.controlSampleSheet, bRemoveDuplicates=TRUE)
 
 saveRDS(dbaExperiment, "diffbind_exp", compress = T) ##Please share
 saveRDS(dbaControl, "diffbind_cont", compress = T) ##Please share
@@ -36,7 +38,7 @@ jg.controlCountsUntreated<-jg.getControlCounts(jg.controlPeakset,
 
 
 saveRDS(jg.controlCountsTreated, "control_counts_treated_object",compress = T) ##Please share
-saveRDS(jg.controlCountsUntreated, "contro_counts_untreated_object", compress = T) ##Please share
+saveRDS(jg.controlCountsUntreated, "control_counts_untreated_object", compress = T) ##Please share
 
 ##Calculation of correction factor
 #Get the sample names for replicates that represent the two conditions.
