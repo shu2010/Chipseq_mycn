@@ -1,8 +1,8 @@
 SampleID,Tissue,Factor,Condition,Replicate,bamReads,ControlID,bamControl,Peaks,PeakCaller
-1a,CaOV3,MYCN,none,1,/projects/drc_scratch/chipseq_wf/blacklist_filtered/human/ATCACG_bl_filtered.bam,Input,/projects/drc_scratch/chipseq_wf/blacklist_filtered/human/ACAGTG_bl_filtered.bam,/projects/drc_scratch/chipseq_wf/peaks/human/MYCN_1_peaks.narrowPeak,bed
-1b,CaOV3,MYCN,none,1,/projects/drc_scratch/chipseq_wf/blacklist_filtered/human/CGATGT_bl_filtered.bam,Input,/projects/drc_scratch/chipseq_wf/blacklist_filtered/human/GCCAAT_bl_filtered.bam,/projects/drc_scratch/chipseq_wf/peaks/human/MYCN_2_peaks.narrowPeak,bed
-2a,CaOV3,MYCN,DOX,2,/projects/drc_scratch/chipseq_wf/blacklist_filtered/human/TTAGGC_bl_filtered.bam,Input,/projects/drc_scratch/chipseq_wf/blacklist_filtered/human/CAGATC_bl_filtered.bam,/projects/drc_scratch/chipseq_wf/peaks/human/MYCN_DOX_1_peaks.narrowPeak,bed
-2b,CaOV3,MYCN,DOX,2,/projects/drc_scratch/chipseq_wf/blacklist_filtered/human/TGACCA_bl_filtered.bam,Input,/projects/drc_scratch/chipseq_wf/blacklist_filtered/human/ACTTGA_bl_filtered.bam,/projects/drc_scratch/chipseq_wf/peaks/human/MYCN_DOX_2_peaks.narrowPeak,bed
+1a,CaOV3,MYCN,none,1,/projects/drc_scratch/chipseq_wf/mapped/human/ATCACG.markdup.bam,Input,/projects/drc_scratch/chipseq_wf/mapped/human/ACAGTG.markdup.bam,/projects/drc_scratch/chipseq_wf/all_bam_p01/human/MYCN_1_all_bam_p01.narrowPeak,bed
+1b,CaOV3,MYCN,none,1,/projects/drc_scratch/chipseq_wf/mapped/human/CGATGT.markdup.bam,Input,/projects/drc_scratch/chipseq_wf/mapped/human/GCCAAT.markdup.bam,/projects/drc_scratch/chipseq_wf/all_bam_p01/human/MYCN_2_all_bam_p01.narrowPeak,bed
+2a,CaOV3,MYCN,DOX,2,/projects/drc_scratch/chipseq_wf/mapped/human/TTAGGC.markdup.bam,Input,/projects/drc_scratch/chipseq_wf/mapped/human/CAGATC.markdup.bam,/projects/drc_scratch/chipseq_wf/all_bam_p01/human/MYCN_DOX_1_all_bam_p01.narrowPeak,bed
+2b,CaOV3,MYCN,DOX,2,/projects/drc_scratch/chipseq_wf/mapped/human/TGACCA.markdup.bam,Input,/projects/drc_scratch/chipseq_wf/mapped/human/ACTTGA.markdup.bam,/projects/drc_scratch/chipseq_wf/all_bam_p01/human/MYCN_DOX_2_all_bam_p01.narrowPeak,bed
 
 
 

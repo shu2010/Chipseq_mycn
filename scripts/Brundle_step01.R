@@ -4,7 +4,7 @@
 library(Brundle)
 
 ##Initial conditions
-jg.controlMinOverlap      <- 5
+jg.controlMinOverlap      <- 5 # how does this parameter affect things?
 jg.treatedCondition       =  "DOX"
 jg.untreatedCondition     =  "none"
 
@@ -15,16 +15,16 @@ jg.controlSampleSheet    = "/projects/drc_scratch/chipseq_wf/Chipseq_mycn/data/C
 dbaExperiment <- jg.getDba(jg.experimentSampleSheet, bRemoveDuplicates=TRUE)
 dbaControl    <- jg.getDba(jg.controlSampleSheet, bRemoveDuplicates=TRUE)
 
-saveRDS(dbaExperiment, "diffbind_exp", compress = T) ##Please share
-saveRDS(dbaControl, "diffbind_cont", compress = T) ##Please share
+saveRDS(dbaExperiment, "/projects/drc_scratch/chipseq_wf/Chipseq_mycn/data/diffbind_exp", compress = TRUE) ##Please share
+saveRDS(dbaControl, "/projects/drc_scratch/chipseq_wf/Chipseq_mycn/data/diffbind_cont", compress = TRUE) ##Please share
 
 ##Read counts from peak data
 
 jg.experimentPeakset <- jg.dbaGetPeakset(dbaExperiment)
 jg.controlPeakset    <- jg.dbaGetPeakset(dbaControl)
 
-saveRDS(jg.experimentPeakset, "control_counts_expt_object", compress = T) ##Please share
-saveRDS(jg.controlPeakset, "control_counts_control_object", compress = T) ##Please share
+saveRDS(jg.experimentPeakset, "/projects/drc_scratch/chipseq_wf/Chipseq_mycn/data/control_counts_expt_object", compress = T) ##Please share
+saveRDS(jg.controlPeakset, "/projects/drc_scratch/chipseq_wf/Chipseq_mycn/data/control_counts_control_object", compress = T) ##Please share
 
 
 #Get counts for the treated control samples.
@@ -37,8 +37,8 @@ jg.controlCountsUntreated<-jg.getControlCounts(jg.controlPeakset,
                                                jg.untreatedCondition)
 
 
-saveRDS(jg.controlCountsTreated, "control_counts_treated_object",compress = T) ##Please share
-saveRDS(jg.controlCountsUntreated, "control_counts_untreated_object", compress = T) ##Please share
+saveRDS(jg.controlCountsTreated, "/projects/drc_scratch/chipseq_wf/Chipseq_mycn/data/control_counts_treated_object",compress = T) ##Please share
+saveRDS(jg.controlCountsUntreated, "/projects/drc_scratch/chipseq_wf/Chipseq_mycn/data/control_counts_untreated_object", compress = T) ##Please share
 
 ##Calculation of correction factor
 #Get the sample names for replicates that represent the two conditions.
@@ -50,4 +50,5 @@ jg.correctionFactor<-jg.getCorrectionFactor(jg.experimentSampleSheet,
                                             jg.treatedNames,
                                             jg.untreatedNames)
 
-saveRDS(jg.correctionFactor, "correctionFactor_object", compress = T) ##Please share
+saveRDS(jg.correctionFactor, "/projects/drc_scratch/chipseq_wf/Chipseq_mycn/data/correctionFactor_object", compress = T) ##Please share
+

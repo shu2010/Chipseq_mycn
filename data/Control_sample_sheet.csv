@@ -1,8 +1,8 @@
 SampleID,Tissue,Factor,Condition,Replicate,bamReads,ControlID,bamControl,Peaks,PeakCaller
-1a,CaOV3,MYCN,none,1,/projects/drc_scratch/chipseq_wf/blacklist_filtered/drosophila/ATCACG_bl_filtered.bam,Input,/projects/drc_scratch/chipseq_wf/blacklist_filtered/drosophila/ACAGTG_bl_filtered.bam,/projects/drc_scratch/chipseq_wf/peaks/drosophila/MYCN_1_peaks.narrowPeak,bed
-1b,CaOV3,MYCN,none,1,/projects/drc_scratch/chipseq_wf/blacklist_filtered/drosophila/CGATGT_bl_filtered.bam,Input,/projects/drc_scratch/chipseq_wf/blacklist_filtered/drosophila/GCCAAT_bl_filtered.bam,/projects/drc_scratch/chipseq_wf/peaks/drosophila/MYCN_2_peaks.narrowPeak,bed
-2a,CaOV3,MYCN,DOX,2,/projects/drc_scratch/chipseq_wf/blacklist_filtered/drosophila/TTAGGC_bl_filtered.bam,Input,/projects/drc_scratch/chipseq_wf/blacklist_filtered/drosophila/CAGATC_bl_filtered.bam,/projects/drc_scratch/chipseq_wf/peaks/drosophila/MYCN_DOX_1_peaks.narrowPeak,bed
-2b,CaOV3,MYCN,DOX,2,/projects/drc_scratch/chipseq_wf/blacklist_filtered/drosophila/TGACCA_bl_filtered.bam,Input,/projects/drc_scratch/chipseq_wf/blacklist_filtered/drosophila/ACTTGA_bl_filtered.bam,/projects/drc_scratch/chipseq_wf/peaks/drosophila/MYCN_DOX_2_peaks.narrowPeak,bed
+1a,CaOV3,MYCN,none,1,/projects/drc_scratch/chipseq_wf/mapped/drosophila/ATCACG.markdup.bam,Input,/projects/drc_scratch/chipseq_wf/mapped/drosophila/ACAGTG.markdup.bam,/projects/drc_scratch/chipseq_wf/all_bam_p01/drosophila/MYCN_1_all_bam_p01.narrowPeak,bed
+1b,CaOV3,MYCN,none,1,/projects/drc_scratch/chipseq_wf/mapped/drosophila/CGATGT.markdup.bam,Input,/projects/drc_scratch/chipseq_wf/mapped/drosophila/GCCAAT.markdup.bam,/projects/drc_scratch/chipseq_wf/all_bam_p01/drosophila/MYCN_2_all_bam_p01.narrowPeak,bed
+2a,CaOV3,MYCN,DOX,2,/projects/drc_scratch/chipseq_wf/mapped/drosophila/TTAGGC.markdup.bam,Input,/projects/drc_scratch/chipseq_wf/mapped/drosophila/CAGATC.markdup.bam,/projects/drc_scratch/chipseq_wf/all_bam_p01/drosophila/MYCN_DOX_1_all_bam_p01.narrowPeak,bed
+2b,CaOV3,MYCN,DOX,2,/projects/drc_scratch/chipseq_wf/mapped/drosophila/TGACCA.markdup.bam,Input,/projects/drc_scratch/chipseq_wf/mapped/drosophila/ACTTGA.markdup.bam,/projects/drc_scratch/chipseq_wf/all_bam_p01/drosophila/MYCN_DOX_2_all_bam_p01.narrowPeak,bed
 
 
 

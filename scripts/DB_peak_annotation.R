@@ -1,32 +1,31 @@
-##Brundle workflow for sharing
+## Brundle workflow for sharing
+# Edit Jan 15 2021, Finn Hamilton
+
 
 library(Brundle)
 
-##Initial conditions
+## Initial conditions
 jg.controlMinOverlap      <- 5
 jg.treatedCondition       =  "DOX"
 jg.untreatedCondition     =  "none"
 
-
-
 ###Read the files 
 
-jg.ExperimentSampleSheet <- read.delim("~/path/to/github/Experiment_sample_sheet.csv", sep = ",",
+jg.ExperimentSampleSheet <- read.delim("~/scratch/chipseq_wf/Chipseq_mycn/data/Experiment_sample_sheet.csv", sep=",",
                                        header = T)
-jg.ControlSampleSheet <- read.delim("~/path/to/github/Control_sample_sheet.csv", sep = ",",
+jg.ControlSampleSheet <- read.delim("~/scratch/chipseq_wf/Chipseq_mycn/data/Control_sample_sheet.csv", sep = ",",
                                     header = T)
 
 ##Load the R objects generated in Brundle_step01.R
 
+dbaExperiment <- readRDS("~/scratch/chipseq_wf/Chipseq_mycn/data/diffbind_exp")
+dbaControl <- readRDS("~/scratch/chipseq_wf/Chipseq_mycn/data/diffbind_cont")
 
-dbaExperiment <- readRDS("~/CHIP_seq/data_git/diffbind_exp")
-dbaControl <- readRDS("~/CHIP_seq/data_git/diffbind_cont")
+jg.experimentPeakset <- readRDS("~/scratch/chipseq_wf/Chipseq_mycn/data/control_counts_expt_object")
+jg.controlPeakset <- readRDS("~/scratch/chipseq_wf/Chipseq_mycn/data/control_counts_control_object")
 
-jg.experimentPeakset <- readRDS("~/CHIP_seq/data_git/control_counts_expt_object")
-jg.controlPeakset <- readRDS("~/CHIP_seq/data_git/control_counts_control_object")
-
-jg.controlCountsTreated <- readRDS("~/CHIP_seq/data_git/control_counts_treated_object")
-jg.controlCountsUntreated <- readRDS("~/CHIP_seq/data_git/control_counts_untreated_object")
+jg.controlCountsTreated <- readRDS("~/scratch/chipseq_wf/Chipseq_mycn/data/control_counts_treated_object")
+jg.controlCountsUntreated <- readRDS("~/scratch/chipseq_wf/Chipseq_mycn/data/control_counts_untreated_object")
 
 #Get the sample names for replicates that represent the two conditions.
 jg.untreatedNames <- names(jg.controlCountsUntreated)
@@ -38,10 +37,10 @@ jg.plotNormalization(jg.controlCountsTreated,
                      jg.controlCountsUntreated)
 ## jg.plotNormalization finshes
 
-#Calculate the noralisation coefficent
+#Calculate the normalisation coefficent
 ### Example of jg.getNormalizationCoefficient
 
-jg.coefficient<-jg.getNormalizationCoefficient(jg.controlCountsTreated,
+jg.coefficient <- jg.getNormalizationCoefficient(jg.controlCountsTreated,
                                                jg.controlCountsUntreated)
 
 #Calculates to correction factor for DiffBind
@@ -49,7 +48,7 @@ jg.coefficient<-jg.getNormalizationCoefficient(jg.controlCountsTreated,
 #jg.correctionFactor<-jg.getCorrectionFactor(jg.experimentSampleSheet,
 #                                            jg.treatedNames,
 #                                            jg.untreatedNames)
-jg.correctionFactor <- readRDS("~/CHIP_seq/data_git/correctionFactor_object")
+jg.correctionFactor <- readRDS("~/scratch/chipseq_wf/Chipseq_mycn/data/correctionFactor_object")
 
 #Save data for examples in package
 #save(jg.experimentPeakset, file="data/jg.experimentPeakset.rda")
@@ -83,17 +82,23 @@ data("TSS.human.GRCh38")
 # Choosing the peaks for the interesting comparison, 
 ##create GRanges object from diffbind object
 ##Feel free to change fold to make the analysis more sensitive
-jg.dba.gr <- dba.report(jg.dba, th=.05, bUsePval=TRUE, fold=0.5)
+jg.dba.gr <- dba.report(jg.dba, th=.05, bUsePval=TRUE)
 #data.peaks = dba.report(jg.dba, contrast=1)
 #head(data.peaks)
 
 # Annotate peaks with information on closest TSS using precompiled annotation data
-data.peaksAnno=annotatePeakInBatch(jg.dba.gr, AnnotationData=TSS.human.GRCh38)
+#data.peaksAnno=annotatePeakInBatch(jg.dba.gr, AnnotationData=TSS.human.GRCh38)
 ##use the following command to increase the span of annotation
-#data.peaksAnno=annotatePeakInBatch(jg.dba.gr, AnnotationData=TSS.human.GRCh38, bindingRegion = c(-10000, 10000))
+data.peaksAnno = annotatePeakInBatch(jg.dba.gr, AnnotationData=TSS.human.GRCh38, bindingRegion = c(-10000, 10000))
 
 ##convert ensembl to symbol and entrez (This conversion can be skipped if only Ensemble genes are to be used)
 ##see feature column of dataframe in line 106
+
+BiocManager::install('org.Hs.eg.db')
+library(AnnotationDbi)
+library(org.Hs.eg.db)
+select(org.Hs.eg.db, keys = data.peaksAnno$feature, keytype = 'ENSEMBL', columns = 'SYMBOL')
+
 library(biomaRt) 
 ensembl_hs <- useMart(biomart = "ensembl",
                       dataset = "hsapiens_gene_ensembl",
@@ -101,7 +106,8 @@ ensembl_hs <- useMart(biomart = "ensembl",
 
 # Add gene information
 library(org.Hs.eg.db)
-data.peaksAnno <- addGeneIDs(data.peaksAnno, org.Hs.eg.db, mart = ensembl_hs, feature_id_type = "ensembl_gene_id",
+
+data.peaksAnno_HS <- addGeneIDs(data.peaksAnno, org.Hs.eg.db, mart = ensembl_hs, feature_id_type = "ensembl_gene_id",
                              IDs2Add = c("symbol", "entrezgene"))
 data.peaksAnno_df <- as.data.frame(data.peaksAnno)
 
@@ -209,3 +215,73 @@ jg.plotDeSeqCombined(jg.controlResultsDeseq,
                      title.main="TF Binding Folding changes on DOX treatment",
                      p=0.01, flip=TRUE)
 
+
+#---------- 
+library(ChIPseeker)
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+
+
+#dpeaks <- readPeakFile('~/scratch/chipseq_wf/all_bam_peaks/human/idr_MYCN_DOX.peaks')
+#dpeaks <- readPeakFile('~/scratch/chipseq_wf/all_bam_peaks/human/idr_MYCN.peaks')
+
+mpeaks <- readPeakFile('~/scratch/chipseq_wf/all_bam_p01/human/idr_MYCN_DOX.peaks')
+mpeaks <- readPeakFile('~/scratch/chipseq_wf/all_bam_p01/human/idr_MYCN.peaks')
+
+promoter <- getPromoters(TxDb=txdb, upstream=10000, downstream=10000)
+
+dtagMatrix <- getTagMatrix(dpeaks, windows=promoter)
+mtagMatrix <- getTagMatrix(mpeaks, windows=promoter)
+
+dtagcount <- ChIPseeker:::getTagCount(dtagMatrix, xlim=c(-10000, 10000))
+mtagcount <- ChIPseeker:::getTagCount(mtagMatrix, xlim=c(-10000, 10000))
+
+
+
+par(mar=c(6,8,2,2))
+plot(dtagcount, type='l', 
+     col=rgb(0, 0, 1, 0.5), 
+     lwd=2, bty='n', las=1,
+     xlab="Genomic Region (5'->3')", 
+     ylab = "Read Count Frequency", 
+     mgp=c(4.5,1,0))
+lines(mtagcount, col=rgb(1, 0, 0, 0.3), lwd=1.5)
+legend(4500, 0.00013, pch=15, c('MYCN', 'MYCN + DOX'), 
+       cex=0.8, 
+       col=c(rgb(1, 0, 0, 0.3), rgb(0, 0, 1, 0.5)))
+
+dev.copy2pdf(file='~/scratch/chipseq_wf/Chipseq_mycn/figures/binding_realtive_to_TSS_10KB.pdf', height=3, width=6)
+
+# annotations
+dpeakAnno <- annotatePeak(dpeaks, tssRegion=c(-10000, 10000),
+                         TxDb=txdb, annoDb="org.Hs.eg.db")
+mpeakAnno <- annotatePeak(mpeaks, tssRegion=c(-10000, 10000),
+                          TxDb=txdb, annoDb="org.Hs.eg.db")
+plotAnnoPie(dpeakAnno)
+plotAnnoPie(mpeakAnno)
+
+library(ReactomePA)
+
+gids <- unique(as.data.frame(dpeakAnno)$SYMBOL)
+dpathway <- enrichPathway(as.data.frame(peakAnno)$geneId, readable = TRUE)
+
+res <- pathway1@result[pathway1@result$p.adjust < 0.05, ]
+
+p1 <- length(unique(as.data.frame(peakAnno)$geneId))
+head(dpeaks)
+
+entrez <- peakAnno@anno$SYMBOL
+
+anno <- as.data.frame(dpeakAnno)$geneId
+
+library(clusterProfiler)
+ego <- enrichGO(gene = anno, 
+                keyType = "ENTREZID", 
+                OrgDb = org.Hs.eg.db, 
+                ont = "BP", 
+                pAdjustMethod = "BH", 
+                qvalueCutoff = 0.05, 
+                readable = TRUE)
+
+res_ego <- ego@result[pathway1@result$p.adjust < 0.0001, ]
+res_ego$geneID[res_ego$Description=='regulation of type 2 immune response']
