@@ -1,3 +1,10 @@
+macs2 filterdup -i in.treat.bam --keep-dup=1 -o in.treat.filterdup.bed 
+macs2 filterdup -i in.control.bam --keep-dup=1 -o in.control.bed
+
+macs2 predictd -i CTCF_ChIP_200K_filterdup.bed -g hs -m 5 50
+
+
+
 # take from MACS2 github issue #356: how to incorporate control
 # specify read length
 read_len=150
